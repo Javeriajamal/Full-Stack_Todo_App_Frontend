@@ -6,8 +6,18 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '../../contexts/AuthContext';
 import RegisterForm from '../../components/auth/RegisterForm';
 
+// Add this type to fix TypeScript error
+interface ErrorState {
+  msg?: string;
+}
+
+interface AuthState {
+  isAuthenticated: boolean;
+  error?: string | ErrorState;
+}
+
 const RegisterPage = () => {
-  const { state } = useAuth();
+  const { state } = useAuth() as { state: AuthState };
   const router = useRouter();
 
   // If user is already authenticated, redirect to tasks page
@@ -45,7 +55,11 @@ const RegisterPage = () => {
                 </svg>
               </div>
               <div className="ml-3">
-                <h3 className="text-sm font-medium text-red-400">{typeof state.error === 'string'? state.error: state.error?.msg || 'Registration failed'}</h3>
+                <h3 className="text-sm font-medium text-red-400">
+                  {typeof state.error === 'string'
+                    ? state.error
+                    : state.error?.msg || 'Registration failed'}
+                </h3>
               </div>
             </div>
           </div>
