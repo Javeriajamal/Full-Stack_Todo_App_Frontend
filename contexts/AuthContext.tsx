@@ -200,7 +200,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         id: response.id,
         email: response.email,
         name: response.username, // Using username as name in the user object
-        is_active: response.is_active ?? true,
+        is_active: true,
         created_at: response.created_at,
         updated_at: response.created_at // Use created_at since updated_at might not be in the response
       };
